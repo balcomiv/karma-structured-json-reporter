@@ -1,7 +1,5 @@
 var path = require('path');
 var fs = require('fs');
-var funMap = require('fun-map');
-var converter = require('./resultConverter');
 
 function writeOutput(config, output, helper, logger) {
 
@@ -49,18 +47,18 @@ var JsonResultReporter = function(baseReporterDecorator, formatError, config, he
   };
 
   this.onSpecComplete = function(browser, result) {
-    result.log = result.log.map(logMessageFormater);
+    // convert newlines into array and flatten
+    result.log = [].concat.apply([], result.log.map(function (message) {
+      return message.split('\n');
+    }));
     this.results.push(result);
   };
 
   this.onRunComplete = function() {
-    var output = {};
-    if (this.errors.length) {
-      output = converter.convertErrors(this.errors.map(logMessageFormater));
-    }
-    if (this.results.length) {
-      output = funMap.merge(output, converter.convertResults(this.results));
-    }
+    var output = {
+      errors: this.errors.map(logMessageFormater),
+      results: this.results
+    };
 
     writeOutput(config, output, helper, logger);
 
