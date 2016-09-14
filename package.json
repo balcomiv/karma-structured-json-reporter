@@ -1,25 +1,28 @@
 {
-  "name": "karma-json-result-reporter",
+  "name": "karma-structured-json-reporter",
   "version": "0.6.0",
-  "description": "test results as json file",
+  "description": "Full karma test results as json file",
   "main": "index.js",
   "scripts": {
     "test": "jasmine"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Angular-cz/karma-json-result-reporter.git"
+    "url": "git+https://github.com/tanenbaum/karma-json-result-reporter.git"
   },
   "keywords": [
     "karma-plugin",
-    "karma-reporter"
+    "karma-reporter",
+    "karma", 
+    "reporter",
+    "json",
+    "structured"
   ],
-  "author": "Milan Lempera <milanlempera@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Angular-cz/karma-json-result-reporter/issues"
+    "url": "https://github.com/tanenbaum/karma-json-result-reporter/issues"
   },
-  "homepage": "https://github.com/Angular-cz/karma-json-result-reporter#readme",
+  "homepage": "https://github.com/tanenbaum/karma-json-result-reporter.git#readme",
   "devDependencies": {
     "del": "^2.2.1",
     "jasmine": "^2.4.1",

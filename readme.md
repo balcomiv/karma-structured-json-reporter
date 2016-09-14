@@ -1,4 +1,4 @@
-# Karma JSON result reporter
+# Karma Structured JSON Reporter
 
 [![npm version](https://img.shields.io/npm/v/karma-json-result-reporter.svg?style=plastic)](https://www.npmjs.com/package/karma-json-result-reporter)
 [![Travis](https://img.shields.io/travis/Angular-cz/karma-json-result-reporter.svg)](https://travis-ci.org/Angular-cz/karma-json-result-reporter)
