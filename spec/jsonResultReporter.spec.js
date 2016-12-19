@@ -51,12 +51,25 @@ describe("JsonResultReporter", function() {
     });
 
     describe("with real files", function() {
+      var browser, summary;
 
       var ERROR_TEXT = 'some test error';
 
       beforeEach(function(done) {
         this.result = null;
         this.tempTestDir = os.tmpdir() + '/karma-json-result-reporter';
+        // static results to check in output
+        browser = {
+          id: '1',
+          name: 'Browser1'
+        };
+        summary = {
+          success: 4,
+          failed: 2,
+          error: false,
+          disconnected: false,
+          exitCode: 1
+        };
 
         if (fs.existsSync(this.tempTestDir)) {
           del(this.tempTestDir)
@@ -80,8 +93,8 @@ describe("JsonResultReporter", function() {
         };
 
         var reporter = new JsonResultReporter(this.baseReporterDecorator, this.formatError, config, this.helper, this.logger);
-        reporter.onBrowserError('test', ERROR_TEXT);
-        reporter.onRunComplete();
+        reporter.onBrowserError(browser, ERROR_TEXT);
+        reporter.onRunComplete({}, summary);
 
         waitForFileAndCheckContent(config.outputFile, done);
       });
@@ -92,14 +105,14 @@ describe("JsonResultReporter", function() {
         };
 
         var reporter = new JsonResultReporter(this.baseReporterDecorator, this.formatError, config, this.helper, this.logger);
-        reporter.onBrowserError('test', ERROR_TEXT);
+        reporter.onBrowserError(browser, ERROR_TEXT);
         this.result = {
           suite: ['test suite'],
           description: 'test description',
           log: []
         };
-        reporter.onSpecComplete('test', this.result);
-        reporter.onRunComplete();
+        reporter.onSpecComplete(browser, this.result);
+        reporter.onRunComplete({}, summary);
 
         waitForFileAndCheckContent(config.outputFile, done);
       });
@@ -110,8 +123,8 @@ describe("JsonResultReporter", function() {
         };
 
         var reporter = new JsonResultReporter(this.baseReporterDecorator, this.formatError, config, this.helper, this.logger);
-        reporter.onBrowserError('test', ERROR_TEXT);
-        reporter.onRunComplete();
+        reporter.onBrowserError(browser, ERROR_TEXT);
+        reporter.onRunComplete({}, summary);
 
         waitForFileAndCheckContent(config.outputFile, done);
       });
@@ -123,8 +136,8 @@ describe("JsonResultReporter", function() {
         };
 
         var reporter = new JsonResultReporter(this.baseReporterDecorator, this.formatError, config, this.helper, this.logger);
-        reporter.onBrowserError('test', ERROR_TEXT);
-        reporter.onRunComplete();
+        reporter.onBrowserError(browser, ERROR_TEXT);
+        reporter.onRunComplete({}, summary);
 
         if (!checkFileAndContentSynchronously(config.outputFile, done)) {
           done.fail('Results does not exists - ' + config.outputFile);
@@ -146,12 +159,19 @@ describe("JsonResultReporter", function() {
               done.fail('Read file error - ' + outputFile + ': ' + err);
               return;
             }
+
+            var resultObj = JSON.parse(result.toString());
+            var browserResult = resultObj.browsers[0];
+
+            expect(resultObj.summary).toEqual(jasmine.objectContaining(summary));
+
+            expect(browserResult.browser).toEqual(jasmine.objectContaining(browser));
             
             if (this.result) {
-              expect(result.toString()).toMatch(this.result.description);
+              expect(browserResult.results).toContain(jasmine.objectContaining(this.result));
             }
 
-            expect(result.toString()).toMatch(ERROR_TEXT);
+            expect(browserResult.errors).toContain(ERROR_TEXT);
             done();
           });
 
