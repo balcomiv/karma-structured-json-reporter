@@ -73,16 +73,21 @@ var JsonResultReporter = function(baseReporterDecorator, formatError, config, he
     getBrowser(browser).results.push(result);
   };
 
-  self.onRunComplete = function() {
-    var output = [];
+  self.onRunComplete = function(browsers, summary) {
+    var browserResults = [];
 
     for (var browserId in self.browsers) {
       var browser = self.browsers[browserId];
 
       browser.errors = browser.errors.map(logMessageFormater);
 
-      output.push(browser);
+      browserResults.push(browser);
     }
+
+    var output = {
+      summary: summary,
+      browsers: browserResults
+    };
 
     writeOutput(config, output, helper, logger);
 
