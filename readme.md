@@ -9,35 +9,91 @@ The results are very similar to the internal karma result objects, with some twe
 
 ```
 {
-    "errors": [],
-    "results": [
+    "summary": {
+        "success": 4,
+        "failed": 2,
+        "error": false,
+        "disconnected": false,
+        "exitCode": 1
+    },
+    "browsers": [
         {
-            "description": "has a test that passes",
-            "id": "spec0",
-            "log": [],
-            "skipped": false,
-            "success": true,
-            "suite": [
-                "A suite"
-            ],
-            "time": 8,
-            "executedExpectationsCount": 1
+            "browser": {
+                "id": "23675476",
+                "fullName": "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1",
+                "name": "PhantomJS 2.1.1 (Windows 8 0.0.0)",
+                "state": 5,
+                "lastResult": {
+                    "success": 2,
+                    "failed": 1,
+                    "skipped": 0,
+                    "total": 3,
+                    "totalTime": 11,
+                    "netTime": 3,
+                    "error": false,
+                    "disconnected": false
+                },
+                "disconnectsCount": 0
+            },
+            "errors": [],
+            "results": [
+                {
+                    "description": "has a test that passes",
+                    "id": "spec0",
+                    "log": [],
+                    "skipped": false,
+                    "disabled": false,
+                    "pending": false,
+                    "success": true,
+                    "suite": [
+                        "A suite"
+                    ],
+                    "time": 2,
+                    "executedExpectationsCount": 1
+                },
+                {
+                    "description": "has a test that fails",
+                    "id": "spec1",
+                    "log": [
+                        "Expected true to be false.",
+                        "http://localhost:9876/base/tests.js?91dda573b163812b198bbe16d044180c266573af:9:22",
+                        "loaded@http://localhost:9876/context.js:151:17"
+                    ],
+                    "skipped": false,
+                    "disabled": false,
+                    "pending": false,
+                    "success": false,
+                    "suite": [
+                        "A suite"
+                    ],
+                    "time": 1,
+                    "executedExpectationsCount": 1
+                },
+                {
+                    "description": "also has a test",
+                    "id": "spec2",
+                    "log": [],
+                    "skipped": false,
+                    "disabled": false,
+                    "pending": false,
+                    "success": true,
+                    "suite": [
+                        "A suite",
+                        "with a nested suite"
+                    ],
+                    "time": 0,
+                    "executedExpectationsCount": 1
+                }
+            ]
         },
         {
-            "description": "has a test that fails",
-            "id": "spec1",
-            "log": [
-                "Expected true to be false.",
-                "http://localhost:9876/base/tests.js?91dda573b163812b198bbe16d044180c266573af:9:22",
-                "loaded@http://localhost:9876/context.js:151:17"
-            ],
-            "skipped": false,
-            "success": false,
-            "suite": [
-                "A suite"
-            ],
-            "time": 5,
-            "executedExpectationsCount": 1
+            "browser": {
+                "id": "You get the idea..."
+            },
+            "errors": [],
+            "results": [
+                "As above"
+            ]
         }
     ]
 }
