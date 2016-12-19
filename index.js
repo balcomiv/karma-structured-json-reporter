@@ -3,7 +3,7 @@ var fs = require('fs');
 
 function writeOutput(config, output, helper, logger) {
 
-  var log = logger.create('karma-json-result-reporter');
+  var log = logger.create('karma-structured-json-reporter');
 
   if (config.outputFile) {
     helper.mkdirIfNotExists(path.dirname(config.outputFile), function() {
@@ -31,41 +31,65 @@ function writeOutput(config, output, helper, logger) {
 
 var JsonResultReporter = function(baseReporterDecorator, formatError, config, helper, logger) {
 
-  baseReporterDecorator(this);
+  var self = this;
+
+  baseReporterDecorator(self);
 
   var logMessageFormater = function(error) {
     return formatError(error)
   };
 
-  this.clear = function() {
-    this.results = [];
-    this.errors = [];
+  function getBrowser(browser) {
+    var b = self.browsers[browser.id];
+
+    if (b) {
+      return b;
+    }
+
+    var newRecord = {
+      browser: browser,
+      errors: [],
+      results: []
+    };
+
+    self.browsers[browser.id] = newRecord;
+
+    return newRecord;
+  }
+
+  self.clear = function() {
+    self.browsers = {};
   };
 
-  this.onBrowserError = function(browser, error) {
-    this.errors.push(error);
+  self.onBrowserError = function(browser, error) {
+    getBrowser(browser).errors.push(error);
   };
 
-  this.onSpecComplete = function(browser, result) {
+  self.onSpecComplete = function(browser, result) {
     // convert newlines into array and flatten
-    result.log = [].concat.apply([], result.log.map(function (message) {
+    result.log = [].concat.apply([], result.log.map(function(message) {
       return message.split('\n');
     }));
-    this.results.push(result);
+    getBrowser(browser).results.push(result);
   };
 
-  this.onRunComplete = function() {
-    var output = {
-      errors: this.errors.map(logMessageFormater),
-      results: this.results
-    };
+  self.onRunComplete = function() {
+    var output = [];
+
+    for (var browserId in self.browsers) {
+      var browser = self.browsers[browserId];
+
+      browser.errors = browser.errors.map(logMessageFormater);
+
+      output.push(browser);
+    }
 
     writeOutput(config, output, helper, logger);
 
-    this.clear();
+    self.clear();
   };
 
-  this.clear();
+  self.clear();
 };
 
 JsonResultReporter.$inject = ['baseReporterDecorator', 'formatError', 'config.jsonResultReporter', 'helper', 'logger'];

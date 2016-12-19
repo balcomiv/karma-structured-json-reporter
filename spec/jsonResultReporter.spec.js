@@ -57,6 +57,10 @@ describe("JsonResultReporter", function() {
       beforeEach(function(done) {
         this.result = null;
         this.tempTestDir = os.tmpdir() + '/karma-json-result-reporter';
+        this.browser = {
+          id: '1',
+          name: 'Browser1'
+        };
 
         if (fs.existsSync(this.tempTestDir)) {
           del(this.tempTestDir)
@@ -80,7 +84,7 @@ describe("JsonResultReporter", function() {
         };
 
         var reporter = new JsonResultReporter(this.baseReporterDecorator, this.formatError, config, this.helper, this.logger);
-        reporter.onBrowserError('test', ERROR_TEXT);
+        reporter.onBrowserError(this.browser, ERROR_TEXT);
         reporter.onRunComplete();
 
         waitForFileAndCheckContent(config.outputFile, done);
@@ -92,13 +96,13 @@ describe("JsonResultReporter", function() {
         };
 
         var reporter = new JsonResultReporter(this.baseReporterDecorator, this.formatError, config, this.helper, this.logger);
-        reporter.onBrowserError('test', ERROR_TEXT);
+        reporter.onBrowserError(this.browser, ERROR_TEXT);
         this.result = {
           suite: ['test suite'],
           description: 'test description',
           log: []
         };
-        reporter.onSpecComplete('test', this.result);
+        reporter.onSpecComplete(this.browser, this.result);
         reporter.onRunComplete();
 
         waitForFileAndCheckContent(config.outputFile, done);
@@ -110,7 +114,7 @@ describe("JsonResultReporter", function() {
         };
 
         var reporter = new JsonResultReporter(this.baseReporterDecorator, this.formatError, config, this.helper, this.logger);
-        reporter.onBrowserError('test', ERROR_TEXT);
+        reporter.onBrowserError(this.browser, ERROR_TEXT);
         reporter.onRunComplete();
 
         waitForFileAndCheckContent(config.outputFile, done);
@@ -123,7 +127,7 @@ describe("JsonResultReporter", function() {
         };
 
         var reporter = new JsonResultReporter(this.baseReporterDecorator, this.formatError, config, this.helper, this.logger);
-        reporter.onBrowserError('test', ERROR_TEXT);
+        reporter.onBrowserError(this.browser, ERROR_TEXT);
         reporter.onRunComplete();
 
         if (!checkFileAndContentSynchronously(config.outputFile, done)) {
@@ -146,12 +150,20 @@ describe("JsonResultReporter", function() {
               done.fail('Read file error - ' + outputFile + ': ' + err);
               return;
             }
+
+            var resultObj = JSON.parse(result.toString());
+            var browserResult = resultObj[0];
+
+            expect(browserResult.browser).toEqual(jasmine.objectContaining({
+              id: '1',
+              name: 'Browser1'
+            }));
             
             if (this.result) {
-              expect(result.toString()).toMatch(this.result.description);
+              expect(browserResult.results).toContain(jasmine.objectContaining(this.result));
             }
 
-            expect(result.toString()).toMatch(ERROR_TEXT);
+            expect(browserResult.errors).toContain(ERROR_TEXT);
             done();
           });
 

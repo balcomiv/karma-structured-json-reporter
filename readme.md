@@ -1,6 +1,6 @@
 # Karma Structured JSON Reporter
 
-[![Build Status](https://travis-ci.org/tanenbaum/karma-json-result-reporter.svg?branch=master)](https://travis-ci.org/tanenbaum/karma-json-result-reporter)
+[![Build Status](https://travis-ci.org/tanenbaum/karma-structured-json-reporter.svg?branch=master)](https://travis-ci.org/tanenbaum/karma-structured-json-reporter)
 
 
 This is a karma reporter that will generate a structured JSON report of the karma results.
@@ -58,12 +58,12 @@ In your `karma.conf.js` add
 ```
 plugins: [
     ...
-    'karma-json-result-reporter',
+    'karma-structured-json-reporter',
     ...
   ];
 
 reporters: [
-    'json'
+    'json-result'
     ...
   ],
 ```
