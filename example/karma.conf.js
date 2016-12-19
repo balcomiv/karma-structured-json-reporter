@@ -1,11 +1,12 @@
 module.exports = function(config) {
   config.set({
-    browsers: ['PhantomJS'],
+    browsers: ['PhantomJS', 'SlimerJS'],
     frameworks: ['jasmine'],
-    reporters: ['json-result'],
+    reporters: ['progress', 'json-result'],
     plugins: [
       'karma-jasmine', 
       'karma-phantomjs-launcher',
+      'karma-slimerjs-launcher',
       require('../index.js')
     ],
     files: ['tests.js'],

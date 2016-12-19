@@ -1,14 +1,14 @@
 {
   "name": "karma-structured-json-reporter",
   "version": "0.6.2",
-  "description": "Full karma test results as json file",
+  "description": "Full karma test results as well structued json file.",
   "main": "index.js",
   "scripts": {
     "test": "jasmine"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tanenbaum/karma-json-result-reporter.git"
+    "url": "git+https://github.com/tanenbaum/karma-structured-json-reportergit"
   },
   "keywords": [
     "karma-plugin",
@@ -20,9 +20,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tanenbaum/karma-json-result-reporter/issues"
+    "url": "https://github.com/tanenbaum/karma-structured-json-reporter/issues"
   },
-  "homepage": "https://github.com/tanenbaum/karma-json-result-reporter.git#readme",
+  "homepage": "https://github.com/tanenbaum/karma-structured-json-reporter.git#readme",
   "devDependencies": {
     "del": "^2.2.1",
     "jasmine": "^2.4.1",
