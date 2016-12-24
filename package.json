@@ -24,8 +24,8 @@
   },
   "homepage": "https://github.com/tanenbaum/karma-structured-json-reporter.git#readme",
   "devDependencies": {
-    "del": "^2.2.1",
-    "jasmine": "^2.4.1",
+    "del": "^2.2.2",
+    "jasmine": "^2.5.2",
     "mkdirp": "^0.5.1"
   },
   "dependencies": {}
