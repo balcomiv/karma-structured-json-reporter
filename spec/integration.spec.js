@@ -8,7 +8,7 @@ describe('karma-structured-json-reporter Karma integration', function () {
 
 	const execOptions = { 
 		cwd: path.join(__dirname, '../example'),
-		PATH: process.env.PATH
+		env: process.env
 	};
 
 	function execDone(done) {
