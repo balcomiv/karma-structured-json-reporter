@@ -6,7 +6,10 @@ const fs = require('fs');
 
 describe('karma-structured-json-reporter Karma integration', function () {
 
-	const execOptions = { cwd: path.join(__dirname, '../example') };
+	const execOptions = { 
+		cwd: path.join(__dirname, '../example'),
+		PATH: process.env.PATH
+	};
 
 	function execDone(done) {
 		return (error, stdout, stderr) => {
