@@ -41,7 +41,7 @@ describe('karma-structured-json-reporter Karma integration', function () {
 			expect(error).toBeDefined();
 			expect(this.jsonResultsPath).toBeDefined();
 
-			fs.readFile(this.jsonResultsPath, (err, data) => {
+			fs.readFile(this.jsonResultsPath, 'utf8', (err, data) => {
 				if (err) done.fail(err);
 
 				var results = JSON.parse(data);
