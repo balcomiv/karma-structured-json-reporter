@@ -40,10 +40,12 @@ describe('karma-structured-json-reporter Karma integration', function () {
 
 	it('should generate a full test report and write it to disk', function (done) {
 		// npm test in example project should single run karma
-		exec('npm test', execOptions, (error) => {
+		exec('npm test', execOptions, (error, stdout, stderr) => {
 			// npm test should have failed
 
 			expect(error).toBeDefined();
+			console.log(stdout);
+			console.log(stderr);
 			expect(this.jsonResultsPath).toBeDefined();
 
 			fs.readFile(this.jsonResultsPath, 'utf8', (err, data) => {
