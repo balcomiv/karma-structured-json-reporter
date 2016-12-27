@@ -36,7 +36,7 @@ describe('karma-structured-json-reporter Karma integration', function () {
 
 		// npm install example project
 		exec('npm install', execOptions, execDone(done));
-	});
+	}, 300000);
 
 	it('should generate a full test report and write it to disk', function (done) {
 		// npm test in example project should single run karma
