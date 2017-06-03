@@ -1,6 +1,6 @@
 {
   "name": "karma-structured-json-reporter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Full karma test results as well structued json file.",
   "main": "index.js",
   "scripts": {
