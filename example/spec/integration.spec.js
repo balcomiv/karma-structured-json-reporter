@@ -1,48 +1,32 @@
 const exec = require('child_process').exec;
 const path = require('path');
-const exampleKarmaConfig = require('../example/karma.conf');
+const exampleKarmaConfig = require('../karma.conf');
 const del = require('del');
 const fs = require('fs');
 
 describe('karma-structured-json-reporter Karma integration', function () {
 
 	const execOptions = { 
-		cwd: path.join(__dirname, '../example'),
+		cwd: path.join(__dirname, '../'),
 		env: process.env
 	};
 
-	function execDone(done) {
-		return (error, stdout, stderr) => {
-			if (error) { 
-				return done.fail(error);
-			}
-
-			console.log(stdout);
-			console.log(stderr);
-
-			done();
-		};
-	}
-
-	beforeAll(function (done) {
+	beforeAll(function() {
 		let config = {
-			set: (obj) => this.jsonResultsPath = path.join(__dirname, '../example', obj.jsonResultReporter.outputFile)
+			set: (obj) => this.jsonResultsPath = path.join(__dirname, '../', obj.jsonResultReporter.outputFile)
 		};
 
 		exampleKarmaConfig(config);
 
 		// delete existing results file if present
 		del.sync(this.jsonResultsPath);
-
-		// npm install example project
-		exec('npm install', execOptions, execDone(done));
-	}, 300000);
+	});
 
 	it('should generate a full test report and write it to disk', function (done) {
 		// npm test in example project should single run karma
 		exec('npm test', execOptions, (error, stdout, stderr) => {
-			// npm test should have failed
 
+			// npm test should have failed
 			expect(error).toBeDefined();
 			console.log(stdout);
 			console.log(stderr);

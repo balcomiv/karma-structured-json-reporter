@@ -4,7 +4,9 @@
   "description": "Full karma test results as well structued json file.",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "jasmine",
+    "integration-test": "jasmine example/spec/integration.spec.js",
+    "preintegration-test": "(cd example && npm install)"
   },
   "repository": {
     "type": "git",
