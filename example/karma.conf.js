@@ -7,6 +7,7 @@ module.exports = function(config) {
       'karma-jasmine', 
       'karma-phantomjs-launcher',
       'karma-slimerjs-launcher',
+      'karma-firefox-launcher',
       require('../index.js')
     ],
     files: ['tests.js'],

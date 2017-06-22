@@ -23,8 +23,14 @@ describe('karma-structured-json-reporter Karma integration', function () {
 	});
 
 	it('should generate a full test report and write it to disk', function (done) {
+		// if in Travis-CI use Firefox - slimer doesn't play nice
+		let browserArgs = '';
+		if (process.env.TRAVIS) {
+			browserArgs = ' -- --browsers PhantomJS,Firefox';
+		}
+
 		// npm test in example project should single run karma
-		exec('npm test', execOptions, (error, stdout, stderr) => {
+		exec('npm test' + browserArgs, execOptions, (error, stdout, stderr) => {
 
 			// npm test should have failed
 			expect(error).toBeDefined();
@@ -50,5 +56,5 @@ describe('karma-structured-json-reporter Karma integration', function () {
 				done();
 			})
 		});
-	});
+	}, 30000);
 });
